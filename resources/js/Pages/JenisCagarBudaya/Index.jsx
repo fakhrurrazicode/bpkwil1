@@ -16,11 +16,11 @@ export default function Index({ jenis_cagar_budayas, filters }) {
         }, 500), // 500ms delay
         [filters]
     );
-    const handleSearch = (e) => {
+    const onSearch = (e) => {
         debouncedSearch(e.target.value);
     };
 
-    const handleSort = (field) => {
+    const onSort = (field) => {
         let direction = filters.direction === "asc" ? "desc" : "asc";
         router.get(
             route("jenis_cagar_budaya.index"),
@@ -48,7 +48,7 @@ export default function Index({ jenis_cagar_budayas, filters }) {
                                     type="text"
                                     placeholder="Search..."
                                     defaultValue={filters.search}
-                                    onChange={handleSearch}
+                                    onChange={onSearch}
                                     className="input input-bordered"
                                 />
                                 <Link
@@ -69,16 +69,14 @@ export default function Index({ jenis_cagar_budayas, filters }) {
                                         <tr>
                                             <th>#</th>
                                             <th
-                                                onClick={() =>
-                                                    handleSort("nama")
-                                                }
+                                                onClick={() => onSort("nama")}
                                                 className="cursor-pointer"
                                             >
                                                 Nama
                                             </th>
                                             <th
                                                 onClick={() =>
-                                                    handleSort("deskripsi")
+                                                    onSort("deskripsi")
                                                 }
                                                 className="cursor-pointer"
                                             >
@@ -120,10 +118,40 @@ export default function Index({ jenis_cagar_budayas, filters }) {
                                                                 <FiEdit />
                                                                 Ubah
                                                             </Link>
-                                                            <Link className="btn btn-sm btn-error text-white">
+                                                            <button
+                                                                onClick={(
+                                                                    e
+                                                                ) => {
+                                                                    const confirmation =
+                                                                        confirm(
+                                                                            "Anda yakin ingin menghapus data jenis cagar budaya " +
+                                                                                jenis_cagar_budaya.nama +
+                                                                                "?"
+                                                                        );
+
+                                                                    if (
+                                                                        confirmation
+                                                                    ) {
+                                                                        router.delete(
+                                                                            route(
+                                                                                "jenis_cagar_budaya.destroy",
+                                                                                {
+                                                                                    jenis_cagar_budaya:
+                                                                                        jenis_cagar_budaya.id,
+                                                                                }
+                                                                            ),
+                                                                            {
+                                                                                preserveScroll: true,
+                                                                                preserveState: true,
+                                                                            }
+                                                                        );
+                                                                    }
+                                                                }}
+                                                                className="btn btn-sm btn-error text-white"
+                                                            >
                                                                 <FiTrash />
                                                                 Hapus
-                                                            </Link>
+                                                            </button>
                                                         </div>
                                                     </td>
                                                 </tr>

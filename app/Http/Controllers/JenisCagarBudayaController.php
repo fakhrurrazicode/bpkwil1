@@ -100,6 +100,6 @@ class JenisCagarBudayaController extends Controller
      */
     public function destroy(JenisCagarBudaya $jenis_cagar_budaya)
     {
-        //
+        $jenis_cagar_budaya->delete();
     }
 }
