@@ -1,5 +1,5 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, router, useForm } from "@inertiajs/react";
+import { Head, Link, router, useForm } from "@inertiajs/react";
 import { FiSave } from "react-icons/fi";
 
 export default function Edit({ jenis_cagar_budaya }) {
@@ -31,7 +31,7 @@ export default function Edit({ jenis_cagar_budaya }) {
         <AuthenticatedLayout
             header={
                 <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
-                    Tambah Jenis Cagar Budaya
+                    Perbaharui Jenis Cagar Budaya
                 </h2>
             }
         >
@@ -83,22 +83,33 @@ export default function Edit({ jenis_cagar_budaya }) {
                                     )}
                                 </fieldset>
 
-                                <button
-                                    type="submit"
-                                    className="btn btn-primary w-full"
-                                    disabled={processing}
-                                >
-                                    {processing ? (
-                                        <>
-                                            <span className="loading loading-spinner loading-md"></span>{" "}
-                                            Memperbaharui
-                                        </>
-                                    ) : (
-                                        <>
-                                            <FiSave /> Perbaharui
-                                        </>
-                                    )}
-                                </button>
+                                <div className="flex justify-end gap-2">
+                                    <Link
+                                        href={route("jenis_cagar_budaya.index")}
+                                        preserveScroll={true}
+                                        preserveState={true}
+                                        className="btn btn-neutral"
+                                    >
+                                        Batalkan
+                                    </Link>
+
+                                    <button
+                                        type="submit"
+                                        className="btn btn-primary"
+                                        disabled={processing}
+                                    >
+                                        {processing ? (
+                                            <>
+                                                <span className="loading loading-spinner loading-md"></span>{" "}
+                                                Memperbaharui
+                                            </>
+                                        ) : (
+                                            <>
+                                                <FiSave /> Perbaharui
+                                            </>
+                                        )}
+                                    </button>
+                                </div>
                             </form>
                         </div>
                     </div>

@@ -1,5 +1,5 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, router, useForm } from "@inertiajs/react";
+import { Head, Link, router, useForm } from "@inertiajs/react";
 import { FiSave } from "react-icons/fi";
 
 export default function Create() {
@@ -50,7 +50,7 @@ export default function Create() {
                                         onChange={onChange}
                                     />
                                     {errors.nama ? (
-                                        <div className="label">
+                                        <div className="label text-error">
                                             {errors.nama}
                                         </div>
                                     ) : (
@@ -70,7 +70,7 @@ export default function Create() {
                                         onChange={onChange}
                                     ></textarea>
                                     {errors.deskripsi ? (
-                                        <div className="label">
+                                        <div className="label text-error">
                                             {errors.deskripsi}
                                         </div>
                                     ) : (
@@ -78,22 +78,33 @@ export default function Create() {
                                     )}
                                 </fieldset>
 
-                                <button
-                                    type="submit"
-                                    className="btn btn-primary w-full"
-                                    disabled={processing}
-                                >
-                                    {processing ? (
-                                        <>
-                                            <span className="loading loading-spinner loading-md"></span>{" "}
-                                            Menyimpan
-                                        </>
-                                    ) : (
-                                        <>
-                                            <FiSave /> Simpan
-                                        </>
-                                    )}
-                                </button>
+                                <div className="flex justify-end gap-2">
+                                    <Link
+                                        href={route("jenis_cagar_budaya.index")}
+                                        preserveScroll={true}
+                                        preserveState={true}
+                                        className="btn btn-neutral"
+                                    >
+                                        Batalkan
+                                    </Link>
+
+                                    <button
+                                        type="submit"
+                                        className="btn btn-primary"
+                                        disabled={processing}
+                                    >
+                                        {processing ? (
+                                            <>
+                                                <span className="loading loading-spinner loading-md"></span>{" "}
+                                                Menyimpan
+                                            </>
+                                        ) : (
+                                            <>
+                                                <FiSave /> Simpan
+                                            </>
+                                        )}
+                                    </button>
+                                </div>
                             </form>
                         </div>
                     </div>

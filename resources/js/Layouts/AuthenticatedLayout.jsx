@@ -33,7 +33,7 @@ export default function AuthenticatedLayout({ header, children }) {
                                 <NavLink
                                     href={route("jenis_cagar_budaya.index")}
                                     active={route().current(
-                                        "jenis_cagar_budaya.index"
+                                        "jenis_cagar_budaya.*"
                                     )}
                                 >
                                     Jenis CB
