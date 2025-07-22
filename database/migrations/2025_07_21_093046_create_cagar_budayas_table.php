@@ -14,8 +14,11 @@ return new class extends Migration
         Schema::create('cagar_budaya', function (Blueprint $table) {
             $table->id();
 
+            $table->bigInteger('jenis_cagar_budaya_id')->unsigned()->index();
+            $table->foreign('jenis_cagar_budaya_id')->references('id')->on('cagar_budaya')->onDelete('cascade');
+
             $table->string('nama');
-            $table->enum('sifat', ['sakral', 'profan']);
+            $table->text('deskripsi');
 
             $table->softDeletes();
             $table->timestamps();

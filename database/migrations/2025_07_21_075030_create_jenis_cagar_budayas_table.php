@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('jenis_cagar_budaya', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->string('deskripsi');
+            $table->text('deskripsi');
             $table->softDeletes();
             $table->timestamps();
         });

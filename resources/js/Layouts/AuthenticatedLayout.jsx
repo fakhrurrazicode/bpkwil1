@@ -36,7 +36,19 @@ export default function AuthenticatedLayout({ header, children }) {
                                         "jenis_cagar_budaya.*"
                                     )}
                                 >
-                                    Jenis CB
+                                    Jenis Cagar Budaya
+                                </NavLink>
+                                <NavLink
+                                    href={route("cagar_budaya.index")}
+                                    active={route().current("cagar_budaya.*")}
+                                >
+                                    Cagar Budaya
+                                </NavLink>
+                                <NavLink
+                                    href={route("cagar_budaya.index")}
+                                    // active={route().current("cagar_budaya.*")}
+                                >
+                                    Objek Pemajuan Kebudayaan
                                 </NavLink>
                             </div>
                         </div>
