@@ -4,6 +4,7 @@ use Inertia\Inertia;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
+use App\Http\Controllers\RegionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CagarBudayaController;
 use App\Http\Controllers\JenisCagarBudayaController;
@@ -31,5 +32,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('jenis_cagar_budaya', JenisCagarBudayaController::class);
     Route::resource('cagar_budaya', CagarBudayaController::class);
 });
+
+Route::get('/api/provinces', [RegionController::class, 'getProvinces']);
+Route::get('/api/cities/{province}', [RegionController::class, 'getCities']);
+Route::get('/api/districts/{city}', [RegionController::class, 'getDistricts']);
+Route::get('/api/villages/{district}', [RegionController::class, 'getVillages']);
 
 require __DIR__ . '/auth.php';
