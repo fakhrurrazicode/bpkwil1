@@ -31,6 +31,6 @@ class DatabaseSeeder extends Seeder
             VillagesSeeder::class,
         ]);
         $this->call(JenisCagarBudayaTableSeeder::class);
-        
+        $this->call(CagarBudayaSeeder::class);
     }
 }

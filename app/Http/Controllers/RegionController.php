@@ -15,18 +15,18 @@ class RegionController extends Controller
         return Province::all();
     }
 
-    public function getCities($provinceId)
+    public function getCities($province_code)
     {
-        return City::where('province_id', $provinceId)->get();
+        return City::where('province_code', $province_code)->get();
     }
 
-    public function getDistricts($cityId)
+    public function getDistricts($city_code)
     {
-        return District::where('city_id', $cityId)->get();
+        return District::where('city_code', $city_code)->get();
     }
 
-    public function getVillages($districtId)
+    public function getVillages($district_code)
     {
-        return Village::where('district_id', $districtId)->get();
+        return Village::where('district_code', $district_code)->get();
     }
 }

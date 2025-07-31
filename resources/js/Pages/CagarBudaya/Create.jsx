@@ -21,20 +21,16 @@ export default function Create({ jenis_cagar_budayas }) {
         deskripsi: "",
     });
 
-    const [listKodeProvinsi, setListKodeProvinsi] = useState([]);
-    const [listKodeKabupaten, setListKodeKabupaten] = useState([]);
-    const [listKodeKecamatan, setListKodeKecamatan] = useState([]);
-    const [listKodeDesa, setListKodeDesa] = useState([]);
-
-    // const [selectedProvince, setSelectedProvince] = useState("");
-    // const [selectedCity, setSelectedCity] = useState("");
-    // const [selectedDistrict, setSelectedDistrict] = useState("");
+    const [listProvinsi, setListProvinsi] = useState([]);
+    const [listKabupaten, setListKabupaten] = useState([]);
+    const [listKecamatan, setListKecamatan] = useState([]);
+    const [listDesa, setListDesa] = useState([]);
 
     // Load provinces on component mount
     useEffect(() => {
         fetch("/api/provinces")
             .then((response) => response.json())
-            .then((data) => setListKodeProvinsi(data));
+            .then((data) => setListProvinsi(data));
     }, []);
 
     // Load cities when province is selected
@@ -42,8 +38,7 @@ export default function Create({ jenis_cagar_budayas }) {
         if (data.kode_provinsi) {
             fetch(`/api/cities/${data.kode_provinsi}`)
                 .then((response) => response.json())
-                .then((data) => setListKodeKabupaten(data));
-            ``;
+                .then((data) => setListKabupaten(data));
         }
     }, [data.kode_provinsi]);
 
@@ -52,16 +47,16 @@ export default function Create({ jenis_cagar_budayas }) {
         if (data.kode_kabupaten) {
             fetch(`/api/districts/${data.kode_kabupaten}`)
                 .then((response) => response.json())
-                .then((data) => setListKodeKecamatan(data));
+                .then((data) => setListKecamatan(data));
         }
     }, [data.kode_kabupaten]);
-    ``;
+
     // Load villages when district is selected
     useEffect(() => {
         if (data.kode_kecamatan) {
             fetch(`/api/villages/${data.kode_kecamatan}`)
                 .then((response) => response.json())
-                .then((data) => setListKodeDesa(data));
+                .then((data) => setListDesa(data));
         }
     }, [data.kode_kecamatan]);
 
@@ -71,7 +66,28 @@ export default function Create({ jenis_cagar_budayas }) {
                 setData("kode_provinsi", e.target.value);
                 setData("kode_kabupaten", "");
                 setData("kode_kecamatan", "");
-                setListKodeDesa([]);
+                setData("kode_desa", "");
+                setListKabupaten([]);
+                setListKecamatan([]);
+                setListDesa([]);
+                break;
+
+            case "kode_kabupaten":
+                setData("kode_kabupaten", e.target.value);
+                setData("kode_kecamatan", "");
+                setData("kode_desa", "");
+                setListKecamatan([]);
+                setListDesa([]);
+                break;
+
+            case "kode_kecamatan":
+                setData("kode_kecamatan", e.target.value);
+                setData("kode_desa", "");
+                setListDesa([]);
+                break;
+
+            case "kode_desa":
+                setData("kode_desa", e.target.value);
                 break;
 
             default:
@@ -88,6 +104,9 @@ export default function Create({ jenis_cagar_budayas }) {
             preserveState: true,
             onSuccess: () => {
                 router.visit(route("cagar_budaya.index"));
+            },
+            onError: (error) => {
+                console.log(error);
             },
         });
     };
@@ -196,131 +215,137 @@ export default function Create({ jenis_cagar_budayas }) {
                                         )}
                                     </fieldset>
 
-                                    <fieldset className="fieldset">
-                                        <legend className="fieldset-legend">
-                                            Provinsi
-                                        </legend>
-                                        <select
-                                            className="select"
-                                            name="kode_provinsi"
-                                            value={data.kode_provinsi}
-                                            onChange={onChange}
-                                        >
-                                            <option>
-                                                .: Pilih Provinsi :.
-                                            </option>
-                                            {listKodeProvinsi.map(
-                                                (kode_provinsi) => (
-                                                    <option
-                                                        value={
-                                                            kode_provinsi.kode
-                                                        }
-                                                    >
-                                                        {kode_provinsi.name}
-                                                    </option>
-                                                )
+                                    <div className="grid grid-cols-2 gap-2">
+                                        <fieldset className="fieldset">
+                                            <legend className="fieldset-legend">
+                                                Provinsi
+                                            </legend>
+                                            <select
+                                                className="select"
+                                                name="kode_provinsi"
+                                                value={data.kode_provinsi}
+                                                onChange={onChange}
+                                            >
+                                                <option>
+                                                    .: Pilih Provinsi :.
+                                                </option>
+                                                {listProvinsi.map(
+                                                    (provinsi) => (
+                                                        <option
+                                                            value={
+                                                                provinsi.code
+                                                            }
+                                                        >
+                                                            {provinsi.name}
+                                                        </option>
+                                                    )
+                                                )}
+                                            </select>
+                                            {errors.kode_provinsi ? (
+                                                <div className="label text-error">
+                                                    {errors.kode_provinsi}
+                                                </div>
+                                            ) : (
+                                                <></>
                                             )}
-                                        </select>
-                                        {errors.kode_provinsi ? (
-                                            <div className="label text-error">
-                                                {errors.kode_provinsi}
-                                            </div>
-                                        ) : (
-                                            <></>
-                                        )}
-                                    </fieldset>
+                                        </fieldset>
 
-                                    <fieldset className="fieldset">
-                                        <legend className="fieldset-legend">
-                                            Kabupaten
-                                        </legend>
-                                        <select
-                                            className="select"
-                                            name="kode_kabupaten"
-                                            value={data.kode_kabupaten}
-                                            onChange={onChange}
-                                        >
-                                            <option>
-                                                .: Pilih Kabupaten :.
-                                            </option>
-                                            {["sample kabupaten"].map(
-                                                (kode_kabupaten) => (
-                                                    <option
-                                                        value={kode_kabupaten}
-                                                    >
-                                                        {kode_kabupaten}
-                                                    </option>
-                                                )
+                                        <fieldset className="fieldset">
+                                            <legend className="fieldset-legend">
+                                                Kabupaten
+                                            </legend>
+                                            <select
+                                                className="select"
+                                                name="kode_kabupaten"
+                                                value={data.kode_kabupaten}
+                                                onChange={onChange}
+                                            >
+                                                <option>
+                                                    .: Pilih Kabupaten :.
+                                                </option>
+                                                {listKabupaten.map(
+                                                    (kabupaten) => (
+                                                        <option
+                                                            value={
+                                                                kabupaten.code
+                                                            }
+                                                        >
+                                                            {kabupaten.name}
+                                                        </option>
+                                                    )
+                                                )}
+                                            </select>
+                                            {errors.kode_kabupaten ? (
+                                                <div className="label text-error">
+                                                    {errors.kode_kabupaten}
+                                                </div>
+                                            ) : (
+                                                <></>
                                             )}
-                                        </select>
-                                        {errors.kode_kabupaten ? (
-                                            <div className="label text-error">
-                                                {errors.kode_kabupaten}
-                                            </div>
-                                        ) : (
-                                            <></>
-                                        )}
-                                    </fieldset>
+                                        </fieldset>
 
-                                    <fieldset className="fieldset">
-                                        <legend className="fieldset-legend">
-                                            Kecamatan
-                                        </legend>
-                                        <select
-                                            className="select"
-                                            name="kode_kecamatan"
-                                            value={data.kode_kecamatan}
-                                            onChange={onChange}
-                                        >
-                                            <option>
-                                                .: Pilih Kecamatan :.
-                                            </option>
-                                            {["sample kecamatan"].map(
-                                                (kode_kecamatan) => (
-                                                    <option
-                                                        value={kode_kecamatan}
-                                                    >
-                                                        {kode_kecamatan}
-                                                    </option>
-                                                )
+                                        <fieldset className="fieldset">
+                                            <legend className="fieldset-legend">
+                                                Kecamatan
+                                            </legend>
+                                            <select
+                                                className="select"
+                                                name="kode_kecamatan"
+                                                value={data.kode_kecamatan}
+                                                onChange={onChange}
+                                            >
+                                                <option>
+                                                    .: Pilih Kecamatan :.
+                                                </option>
+                                                {listKecamatan.map(
+                                                    (kecamatan) => (
+                                                        <option
+                                                            value={
+                                                                kecamatan.code
+                                                            }
+                                                        >
+                                                            {kecamatan.name}
+                                                        </option>
+                                                    )
+                                                )}
+                                            </select>
+                                            {errors.kode_kecamatan ? (
+                                                <div className="label text-error">
+                                                    {errors.kode_kecamatan}
+                                                </div>
+                                            ) : (
+                                                <></>
                                             )}
-                                        </select>
-                                        {errors.kode_kecamatan ? (
-                                            <div className="label text-error">
-                                                {errors.kode_kecamatan}
-                                            </div>
-                                        ) : (
-                                            <></>
-                                        )}
-                                    </fieldset>
+                                        </fieldset>
 
-                                    <fieldset className="fieldset">
-                                        <legend className="fieldset-legend">
-                                            Desa
-                                        </legend>
-                                        <select
-                                            className="select"
-                                            name="kode_desa"
-                                            value={data.kode_desa}
-                                            onChange={onChange}
-                                        >
-                                            <option>.: Pilih Desa :.</option>
-                                            {["sample provinsi"].map(
-                                                (kode_desa) => (
-                                                    <option value={kode_desa}>
-                                                        {kode_desa}
+                                        <fieldset className="fieldset">
+                                            <legend className="fieldset-legend">
+                                                Desa
+                                            </legend>
+                                            <select
+                                                className="select"
+                                                name="kode_desa"
+                                                value={data.kode_desa}
+                                                onChange={onChange}
+                                            >
+                                                <option>
+                                                    .: Pilih Desa :.
+                                                </option>
+                                                {listDesa.map((desa) => (
+                                                    <option value={desa.code}>
+                                                        {desa.name}
                                                     </option>
-                                                )
+                                                ))}
+                                            </select>
+                                            {errors.kode_desa ? (
+                                                <div className="label text-error">
+                                                    {errors.kode_desa}
+                                                </div>
+                                            ) : (
+                                                <></>
                                             )}
-                                        </select>
-                                        {errors.kode_desa ? (
-                                            <div className="label text-error">
-                                                {errors.kode_desa}
-                                            </div>
-                                        ) : (
-                                            <></>
-                                        )}
-                                    </fieldset>
+                                        </fieldset>
+                                    </div>
 
                                     <fieldset className="fieldset">
                                         <legend className="fieldset-legend">

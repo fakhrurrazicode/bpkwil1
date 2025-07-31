@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CagarBudaya extends Model
+class CagarBudaya extends BaseModel
 {
     protected $table = 'cagar_budaya';
     protected $guarded = [];
@@ -12,5 +12,10 @@ class CagarBudaya extends Model
     public function jenis_cagar_budaya()
     {
         return $this->belongsTo(JenisCagarBudaya::class);
+    }
+
+    public function files()
+    {
+        return $this->morphMany(File::class, 'fileable');
     }
 }

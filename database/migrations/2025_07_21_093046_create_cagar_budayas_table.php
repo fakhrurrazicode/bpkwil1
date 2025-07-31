@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
 
             $table->bigInteger('jenis_cagar_budaya_id')->unsigned()->index();
-            $table->foreign('jenis_cagar_budaya_id')->references('id')->on('cagar_budaya')->onDelete('cascade');
+            $table->foreign('jenis_cagar_budaya_id')->references('id')->on('jenis_cagar_budaya')->onDelete('cascade');
 
 
             // Identitas Umum

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CagarBudayaStoreRequest;
+use App\Http\Requests\CagarBudayaUpdateRequest;
 use App\Models\CagarBudaya;
 use App\Models\JenisCagarBudaya;
 use Illuminate\Http\Request;
@@ -17,7 +19,8 @@ class CagarBudayaController extends Controller
         $query = CagarBudaya::query();
 
         if ($search = $request->search) {
-            $query->where('nama', 'like', "%$search%");
+            $query->where('cagar_budaya.nama', 'like', "%$search%");
+            $query->orWhere('jenis_cagar_budaya.nama', 'like', "%$search%");
         }
 
         if ($sort = $request->sort) {
@@ -28,10 +31,17 @@ class CagarBudayaController extends Controller
         $query->with([
             'jenis_cagar_budaya'
         ]);
+
+        $query->join('jenis_cagar_budaya', 'cagar_budaya.jenis_cagar_budaya_id', '=', 'jenis_cagar_budaya.id');
+        $query->select('cagar_budaya.*', 'jenis_cagar_budaya.nama as nama_jenis_cagar_budaya');
+
         $cagar_budayas = $query->paginate(10)->withQueryString();
+
+        $jenis_cagar_budayas = JenisCagarBudaya::withCount('cagar_budaya')->get();
 
         return Inertia::render('CagarBudaya/Index', [
             'cagar_budayas' => $cagar_budayas,
+            'jenis_cagar_budayas' => $jenis_cagar_budayas,
             'filters' => $request->only(['search', 'sort', 'direction']),
         ]);
     }
@@ -50,20 +60,9 @@ class CagarBudayaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CagarBudayaStoreRequest $request)
     {
-        $validated = $request->validate([
-            'jenis_cagar_budaya_id' => ['required', 'exists:jenis_cagar_budaya,id'],
-            'nama' => [
-                'required',
-                'string',
-                'unique:cagar_budaya,nama'
-            ],
-            'deskripsi' => ['required', 'string'],
-
-        ]);
-
-        CagarBudaya::create($validated);
+        CagarBudaya::create($request->validated());
     }
 
     /**
@@ -71,10 +70,10 @@ class CagarBudayaController extends Controller
      */
     public function show(CagarBudaya $cagar_budaya)
     {
-
-        // return Inertia::render('CagarBudaya/Edit', [
-        //     'cagar_budaya' => $cagar_budaya
-        // ]);
+        $cagar_budaya->load(['jenis_cagar_budaya']);
+        return Inertia::render('CagarBudaya/Show', [
+            'cagar_budaya' => $cagar_budaya
+        ]);
     }
 
     /**
@@ -92,18 +91,9 @@ class CagarBudayaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, CagarBudaya $cagar_budaya)
+    public function update(CagarBudayaUpdateRequest $request, CagarBudaya $cagar_budaya)
     {
-        $validated = $request->validate([
-            'nama' => [
-                'required',
-                'string',
-                'unique:cagar_budaya,nama,' . $cagar_budaya->id,
-            ],
-            'deskripsi' => ['required', 'string'],
-        ]);
-
-        $cagar_budaya->update($validated);
+        $cagar_budaya->update($request->validated());
     }
 
     /**

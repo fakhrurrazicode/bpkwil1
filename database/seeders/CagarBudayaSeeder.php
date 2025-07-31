@@ -1,0 +1,173 @@
+<?php
+
+namespace Database\Seeders;
+
+use Carbon\Carbon;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+class CagarBudayaSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+
+        $now = Carbon::now();
+
+        DB::table('cagar_budaya')->insert([
+            [
+                'jenis_cagar_budaya_id' => 1,
+                'nama' => 'Meriam Kuno Ulee Lheue',
+                'sifat' => 'sakral',
+                'kode_provinsi' => '11',
+                'kode_kabupaten' => '1101',
+                'kode_kecamatan' => '110101',
+                'kode_desa' => '1101010001',
+                'alamat' => 'Ulee Lheue, Banda Aceh',
+                'latitude' => 5.559,
+                'longitude' => 95.291,
+                'elevasi' => 10,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ],
+            [
+                'jenis_cagar_budaya_id' => 2,
+                'nama' => 'Masjid Raya Baiturrahman',
+                'sifat' => 'sakral',
+                'kode_provinsi' => '11',
+                'kode_kabupaten' => '1101',
+                'kode_kecamatan' => '110102',
+                'kode_desa' => '1101020002',
+                'alamat' => 'Pusat Kota Banda Aceh',
+                'latitude' => 5.553,
+                'longitude' => 95.317,
+                'elevasi' => 12,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ],
+            [
+                'jenis_cagar_budaya_id' => 3,
+                'nama' => 'Benteng Inong Balee',
+                'sifat' => 'profane',
+                'kode_provinsi' => '11',
+                'kode_kabupaten' => '1102',
+                'kode_kecamatan' => '110201',
+                'kode_desa' => '1102010001',
+                'alamat' => 'Kota Sabang',
+                'latitude' => 5.888,
+                'longitude' => 95.319,
+                'elevasi' => 80,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ],
+            [
+                'jenis_cagar_budaya_id' => 4,
+                'nama' => 'Kompleks Makam Sultan Iskandar Muda',
+                'sifat' => 'sakral',
+                'kode_provinsi' => '11',
+                'kode_kabupaten' => '1103',
+                'kode_kecamatan' => '110301',
+                'kode_desa' => '1103010002',
+                'alamat' => 'Gampong Pande, Banda Aceh',
+                'latitude' => 5.548,
+                'longitude' => 95.315,
+                'elevasi' => 9,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ],
+            [
+                'jenis_cagar_budaya_id' => 5,
+                'nama' => 'Kompleks Situs Lhok Seumawe',
+                'sifat' => 'profane',
+                'kode_provinsi' => '11',
+                'kode_kabupaten' => '1104',
+                'kode_kecamatan' => '110401',
+                'kode_desa' => '1104010003',
+                'alamat' => 'Lhokseumawe',
+                'latitude' => 5.187,
+                'longitude' => 97.144,
+                'elevasi' => 20,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ],
+            [
+                'jenis_cagar_budaya_id' => 1,
+                'nama' => 'Tanduk Kerbau Emas',
+                'sifat' => 'sakral',
+                'kode_provinsi' => '11',
+                'kode_kabupaten' => '1105',
+                'kode_kecamatan' => '110501',
+                'kode_desa' => '1105010004',
+                'alamat' => 'Aceh Tengah',
+                'latitude' => 4.598,
+                'longitude' => 96.843,
+                'elevasi' => 120,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ],
+            [
+                'jenis_cagar_budaya_id' => 2,
+                'nama' => 'Rumoh Aceh Cut Meutia',
+                'sifat' => 'profane',
+                'kode_provinsi' => '11',
+                'kode_kabupaten' => '1106',
+                'kode_kecamatan' => '110601',
+                'kode_desa' => '1106010002',
+                'alamat' => 'Lhokseumawe',
+                'latitude' => 5.181,
+                'longitude' => 97.140,
+                'elevasi' => 15,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ],
+            [
+                'jenis_cagar_budaya_id' => 3,
+                'nama' => 'Jembatan Kuno Peureulak',
+                'sifat' => 'profane',
+                'kode_provinsi' => '11',
+                'kode_kabupaten' => '1107',
+                'kode_kecamatan' => '110701',
+                'kode_desa' => '1107010005',
+                'alamat' => 'Peureulak, Aceh Timur',
+                'latitude' => 4.862,
+                'longitude' => 97.441,
+                'elevasi' => 8,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ],
+            [
+                'jenis_cagar_budaya_id' => 4,
+                'nama' => 'Situs Makam Raja Peureulak',
+                'sifat' => 'sakral',
+                'kode_provinsi' => '11',
+                'kode_kabupaten' => '1107',
+                'kode_kecamatan' => '110701',
+                'kode_desa' => '1107010006',
+                'alamat' => 'Aceh Timur',
+                'latitude' => 4.865,
+                'longitude' => 97.445,
+                'elevasi' => 9,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ],
+            [
+                'jenis_cagar_budaya_id' => 5,
+                'nama' => 'Kawasan Benteng Kuta Lubok',
+                'sifat' => 'profane',
+                'kode_provinsi' => '11',
+                'kode_kabupaten' => '1108',
+                'kode_kecamatan' => '110801',
+                'kode_desa' => '1108010003',
+                'alamat' => 'Aceh Selatan',
+                'latitude' => 3.307,
+                'longitude' => 97.371,
+                'elevasi' => 14,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ],
+        ]);
+    }
+}

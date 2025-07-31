@@ -7,6 +7,7 @@ use Illuminate\Foundation\Application;
 use App\Http\Controllers\RegionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CagarBudayaController;
+use App\Http\Controllers\ChartController;
 use App\Http\Controllers\JenisCagarBudayaController;
 
 Route::get('/', function () {
@@ -34,8 +35,10 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/api/provinces', [RegionController::class, 'getProvinces']);
-Route::get('/api/cities/{province}', [RegionController::class, 'getCities']);
-Route::get('/api/districts/{city}', [RegionController::class, 'getDistricts']);
-Route::get('/api/villages/{district}', [RegionController::class, 'getVillages']);
+Route::get('/api/cities/{province_code}', [RegionController::class, 'getCities']);
+Route::get('/api/districts/{city_code}', [RegionController::class, 'getDistricts']);
+Route::get('/api/villages/{district_code}', [RegionController::class, 'getVillages']);
+
+Route::get('/api/jenis_cagar_budaya', [ChartController::class, 'jenis_cagar_budaya']);
 
 require __DIR__ . '/auth.php';
